@@ -1,0 +1,42 @@
+Structure
+
+AREA
+  Province
+    City
+    Region
+
+Product
+    Type: RON 97, RON 95, RON 91, DIESEL, DIESEL PLUS, KEROSENE
+    Company: Petron, Shell, Caltex, Phoenix, Flying V, Seaoil, Jetti, My Gas, Independent
+    Price: (float - float), N.A., NO BRANCH/OUTLET, NONE, -
+    Overall Range (OVERALL)
+    Common Price (COMMON)
+    Average Price (AVERAGE)
+
+Data[0] = Headers
+Data[1] = "Liquid Fuels Price Range"
+Data[2] = "REGION
+Data[3] = Start line with province (e.g. "Zamboanga del Sur")
+Data[4] = Continue with product 2
+
+
+Corpus and rules
+
+1. Read "AREA"
+2. Read "PRODUCT"
+3. Add item to COMPANY (PETRON, SHELL, ..., )
+4. ... until "Overall"
+5. Liquid Fuels Price Range,ignore
+6. Set current region
+7. /^REGION/ and or valid regions list,update/add
+8. Add province
+9. .. Set current province
+10. Add city
+11. ...Set current city
+12. * Add product(type) to city
+13. Add price to product company in order
+14. ...until all companies added price
+15. Set Overall
+16. Set Common
+17. Set Average
+18. Repeat from step 12
