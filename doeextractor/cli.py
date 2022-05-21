@@ -1,13 +1,12 @@
 """Console script for doeextractor."""
 import sys
-from curses import use_default_colors
 
 import click
 
 from doeextractor.constants import ExtractMethod, Formats
 
-from .doeextractor import debug_info
-from .doeextractor import extract as do_extract
+from .tabula import debug_info
+from .tabula import extract as do_extract
 
 
 @click.group()
@@ -17,7 +16,9 @@ def cli():
     return 0
 
 
-@cli.command()
+@cli.command(
+    help="Extract tables from a PDF file using Tabula",
+)
 @click.option(
     "-a",
     "--area",
@@ -93,6 +94,11 @@ def cli():
     "--input_file_path",
     type=click.Path(exists=True, dir_okay=False, file_okay=True),
 )
+@click.option(
+    "-o",
+    "--output_file_path",
+    type=click.Path(dir_okay=False, file_okay=True, writable=True),
+)
 def extract(
     area,
     batch,
@@ -104,6 +110,7 @@ def extract(
     password,
     use_line_returns,
     input_file_path,
+    output_file_path,
 ):
     extract_method_value = ExtractMethod[extract_method]
     do_extract(
@@ -117,11 +124,12 @@ def extract(
         password=password,
         use_line_returns=use_line_returns,
         input_file_path=input_file_path,
+        output_file_path=output_file_path,
     )
     return 0
 
 
-@cli.command()
+@cli.command(help="Debug info for DOE Extractor")
 def show_debug_info():
     click.echo(debug_info())
     return 0

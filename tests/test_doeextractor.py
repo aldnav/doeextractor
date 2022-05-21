@@ -5,7 +5,7 @@
 import pytest
 from click.testing import CliRunner
 
-from doeextractor import cli, doeextractor
+from doeextractor import cli, tabula
 
 
 @pytest.fixture

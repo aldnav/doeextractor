@@ -1,7 +1,8 @@
 import os
 import subprocess
 from logging import getLogger
-from typing import Type
+from pathlib import Path
+from typing import Optional
 
 from dotenv import load_dotenv
 
@@ -30,6 +31,7 @@ def _tabula(
     area=None,
     guess=False,
     use_line_returns=False,
+    output_file_path=None,  # If None, output to stdout
 ):
     """
     Run tabula
@@ -60,10 +62,16 @@ def _tabula(
     if batch_directory is None and input_file_path is None:
         raise TypeError("Must specify either batch_directory or input_file_path")
     if batch_directory:
-        command.extend(["--batch", batch_directory])
+        command.extend(["--batch", str(Path(batch_directory).absolute())])
     elif input_file_path:
-        command.append(input_file_path)
-    return command
+        command.append(str(Path(input_file_path).absolute()))
+    if output_file_path:
+        command.extend(["-o", str(Path(output_file_path).absolute())])
+    print("Running tabula with this command:")
+    print(" ".join(command))
+
+    result = _run_tabula(command)
+    return result.stdout.decode("utf-8")
 
 
 def _java_version():
@@ -85,10 +93,12 @@ def _java_version():
     return result.stdout.decode("utf-8")
 
 
-def _tabula_version():
+def _run_tabula(command: Optional[list] = None):
+    if not command:
+        command = ["java", "-jar", TABULA_JAR_PATH, "-v"]
     try:
         result = subprocess.run(
-            ["java", "-jar", TABULA_JAR_PATH, "-v"],
+            command,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             stdin=subprocess.DEVNULL,
@@ -101,17 +111,24 @@ def _tabula_version():
             "Error occured while running tabula:\n{}\n".format(e.stderr.decode("utf-8"))
         )
         raise
+    return result
+
+
+def _tabula_version():
+    result = _run_tabula()  # command is for debug (default)
     return result.stdout.decode("utf-8")
 
 
-def debug_info():
+def debug_info(silent=False):
     java_version = _java_version()
     tabula_version = _tabula_version()
+    if silent:
+        return
     return (
         f"DOE Extractor\n\n"
         + f"Java:\n"
         + f"{java_version}\n\n"
-        + "Tabula\n"
+        + "Tabula:\n"
         + f"{tabula_version}"
     )
 
@@ -120,4 +137,5 @@ def extract(*args, **kwargs):
     """
     Extract data from PDFs using tabula
     """
+    debug_info(silent=True)
     print(_tabula(*args, **kwargs))
