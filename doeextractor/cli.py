@@ -5,6 +5,7 @@ import click
 
 from doeextractor.constants import ExtractMethod, Formats
 
+from .parser import parse as do_parse
 from .tabula import debug_info
 from .tabula import extract as do_extract
 
@@ -132,6 +133,21 @@ def extract(
 @cli.command(help="Debug info for DOE Extractor")
 def show_debug_info():
     click.echo(debug_info())
+    return 0
+
+
+@cli.command(help="Parse extracted tables")
+@click.argument(
+    "input_file_path", type=click.Path(exists=True, dir_okay=False, file_okay=True)
+)
+@click.option(
+    "-o",
+    "--output_file_path",
+    type=click.Path(dir_okay=False, file_okay=True, writable=True),
+)
+def parse(input_file_path, output_file_path):
+    click.echo("Parse extracted tables")
+    do_parse(input_file_path, output_file_path)
     return 0
 
 
