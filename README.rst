@@ -97,3 +97,12 @@ Usage
 
 .. _Tabula: https://github.com/tabulapdf/tabula-java
 .. _DOE: https://www.doe.gov.ph/
+
+
+**Parsing the extracted report**
+
+::
+
+    $ doeextractor parse samples/petro_min_2022-may-10.json -o samples/parsed_output.json
+    Parse extracted tables
+    Output file saved to: /Users/pro/doeextractor/samples/parsed_output.json

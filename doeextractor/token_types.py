@@ -1,4 +1,5 @@
 import re
+from sre_parse import SPECIAL_CHARS
 
 CITIES = [
     # mindanao
@@ -47,13 +48,25 @@ CITIES = [
     "dinagat",
     "cotabato city",
 ]
+# Made separate because of parsing difficulties
+SPECIAL_CITIES = [
+    "sagay",
+    "jasaan",
+    "mambajao",
+    "catarman",
+    "mahinog",
+]
 
 
 def feature_is_city(text):
     try:
         return isinstance(CITIES.index(text.lower().strip()), int)
     except ValueError:
-        return text.startswith("city of ") or text.endswith(" city")
+        return (
+            text.startswith("city of ")
+            or text.endswith(" city")
+            or any([special_city in text for special_city in SPECIAL_CITIES])
+        )
     return False
 
 
@@ -70,6 +83,7 @@ BRANDS = [
 ]
 # TODO: What to do with brands in headers?
 HEADERS = [
+    "area",
     "product",
     "petron",
     "shell",
@@ -121,16 +135,24 @@ FEATURES = {
     "is_brand": lambda text: text.lower().strip() in BRANDS,
     "is_header": lambda text: text.lower().strip() in ALL_HEADERS,
     "is_product_type": lambda text: text.lower().strip() in PRODUCT_TYPES,
-    "is_none_type": lambda text: len(text) == 0 or text.lower().strip() in NONE_TYPES,
+    "is_none_type": lambda text: len(text.lower().strip()) == 0
+    or text.lower().strip() in NONE_TYPES,
     "is_price": feature_is_price,
 }
 
+TYPE_CITY = "city"
+TYPE_BRAND = "brand"
+TYPE_HEADER = "header"
+TYPE_PRODUCT_TYPE = "product_type"
+TYPE_NONE_TYPE = "none_type"
+TYPE_PRICE = "price"
+
 TOKEN_TYPES = {
-    "is_city": "city",
-    "is_brand": "brand",
-    "is_header": "header",
-    "is_product_type": "product_type",
-    "is_none_type": "none_type",
-    "is_price": "price",
+    "is_city": TYPE_CITY,
+    "is_brand": TYPE_BRAND,
+    "is_header": TYPE_HEADER,
+    "is_product_type": TYPE_PRODUCT_TYPE,
+    "is_none_type": TYPE_NONE_TYPE,
+    "is_price": TYPE_PRICE,
     "default": UNCATEGORIZED,
 }
