@@ -8,6 +8,7 @@ from doeextractor.constants import ExtractMethod, Formats
 from .parser import parse as do_parse
 from .tabula import debug_info
 from .tabula import extract as do_extract
+from .textractor import extract as do_textract
 
 
 @click.group()
@@ -100,7 +101,7 @@ def cli():
     "--output_file_path",
     type=click.Path(dir_okay=False, file_okay=True, writable=True),
 )
-def extract(
+def tabula_extract(
     area,
     batch,
     columns,
@@ -126,6 +127,18 @@ def extract(
         use_line_returns=use_line_returns,
         input_file_path=input_file_path,
         output_file_path=output_file_path,
+    )
+    return 0
+
+
+@cli.command(help="Extract tables from a PDF file using Amazon Textract")
+@click.argument(
+    "input_file_path",
+    type=click.Path(exists=True, dir_okay=False, file_okay=True),
+)
+def extract(input_file_path):
+    do_textract(
+        input_file_path=input_file_path,
     )
     return 0
 

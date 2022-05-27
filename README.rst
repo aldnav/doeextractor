@@ -24,6 +24,14 @@ DOE Reports Extractor
 * Documentation: https://doeextractor.readthedocs.io.
 
 
+Requirements
+------------
+
+Poppler via pdf2image
+
+https://github.com/Belval/pdf2image#how-to-install
+
+
 Features
 --------
 
