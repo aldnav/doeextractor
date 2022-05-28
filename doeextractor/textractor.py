@@ -29,53 +29,61 @@ if not AWS_REGION or not AWS_ACCESS_KEY or not AWS_SECRET_KEY:
 def get_table_csv_results(input_file: Path):
     input_as_image = convert_pdf_to_png(input_file)
     # contents = bytearray(input_as_image.read_bytes())
-    with open(input_file, "rb") as document:
-        contents = bytearray(document.read())
-    # contents = base64.b64encode(input_as_image.read_bytes())
+    input_images = []
+    if input_as_image.is_dir():
+        input_images.extend(input_as_image.glob("*.png"))
+    else:
+        input_images = [input_as_image]
+
+    csv_results = []
+    print("Analyzing...")
     client = boto3.client(
         "textract",
         aws_access_key_id=AWS_ACCESS_KEY,
         aws_secret_access_key=AWS_SECRET_KEY,
         region_name=AWS_REGION,
     )
-    response = client.analyze_document(
-        Document={"Bytes": contents}, FeatureTypes=["TABLES"]
-    )
+    for idx, input_png in enumerate(input_images):
+        with open(input_png, "rb") as document:
+            # contents = bytearray(document.read())
+            contents = bytearray(document.read())
+        # contents = base64.b64encode(input_as_image.read_bytes())
+        print(f"{idx} / {len(input_images)}")
+        response = client.analyze_document(
+            Document={"Bytes": contents}, FeatureTypes=["TABLES"]
+        )
 
-    blocks = response["Blocks"]
+        blocks = response["Blocks"]
 
-    blocks_map = {}
-    table_blocks = []
-    for block in blocks:
-        blocks_map[block["Id"]] = block
-        if block["BlockType"] == "TABLE":
-            table_blocks.append(block)
+        blocks_map = {}
+        table_blocks = []
+        for block in blocks:
+            blocks_map[block["Id"]] = block
+            if block["BlockType"] == "TABLE":
+                table_blocks.append(block)
 
-    if len(table_blocks) == 0:
-        return None
+        if len(table_blocks) == 0:
+            return None
 
-    csv = ""
-    for index, table in enumerate(table_blocks):
-        csv += generate_table_csv(table, blocks_map, index + 1)
-        csv += "\n\n"
+        csv = ""
+        for index, table in enumerate(table_blocks):
+            csv += generate_table_csv(table, blocks_map, index + 1)
+            csv += "\n\n"
+        csv_results.append(csv)
+    print(f"{len(input_images)} / {len(input_images)}")
 
-    return csv
+    return csv_results
 
 
 def generate_table_csv(table_result, blocks_map, table_index):
     rows = get_rows_columns_map(table_result, blocks_map)
-
-    table_id = "Table_" + str(table_index)
-
+    # table_id = "Table_" + str(table_index)
     # get cells.
-    csv = "Table: {0}\n\n".format(table_id)
-
+    # csv = "Table: {0}\n\n".format(table_id)
     for row_index, cols in rows.items():
-
         for col_index, text in cols.items():
             csv += "{}".format(text) + ","
         csv += "\n"
-
     csv += "\n\n\n"
     return csv
 
@@ -92,7 +100,6 @@ def get_rows_columns_map(table_result, blocks_map):
                     if row_index not in rows:
                         # create new row
                         rows[row_index] = {}
-
                     # get the text value
                     rows[row_index][col_index] = get_text(cell, blocks_map)
     return rows
@@ -128,12 +135,14 @@ def extract(input_file_path: Union[str, Path]):
         return 0
 
     csv_results = get_table_csv_results(input_file_path)
-    if csv_results is None:
+    if not bool(csv_results):
         print("Cannot analyze or no CSV results")
         return 0
 
     output_file_path = input_file_path.with_suffix(".csv")
     with open(output_file_path, "w") as f:
-        f.write(csv_results)
+        for csv_result in csv_results:
+            f.write(csv_result)
     add_file_to_local_cache(input_file_path, output_file_path)
     print("CSV results are written to {}".format(input_file_path.with_suffix(".csv")))
+    return 0
