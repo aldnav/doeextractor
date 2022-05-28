@@ -109,3 +109,4 @@ samples/parsed_output.json
 cache.db
 output/
 .DS_Store
+!samples/output
