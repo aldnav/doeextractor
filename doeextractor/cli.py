@@ -8,6 +8,7 @@ from doeextractor.constants import ExtractMethod, Formats
 from .parser import parse as do_parse
 from .tabula import debug_info
 from .tabula import extract as do_extract
+from .textract_parser import parse as do_textract_parse
 from .textractor import extract as do_textract
 
 
@@ -149,7 +150,7 @@ def show_debug_info():
     return 0
 
 
-@cli.command(help="Parse extracted tables")
+@cli.command(help="Parse extracted tables from Tabula")
 @click.argument(
     "input_file_path", type=click.Path(exists=True, dir_okay=False, file_okay=True)
 )
@@ -158,9 +159,30 @@ def show_debug_info():
     "--output_file_path",
     type=click.Path(dir_okay=False, file_okay=True, writable=True),
 )
-def parse(input_file_path, output_file_path):
+def tabula_parse(input_file_path, output_file_path):
     click.echo("Parse extracted tables")
     do_parse(input_file_path, output_file_path)
+    return 0
+
+
+@cli.command(help="Parse extracted tables from Amazon Textract")
+@click.argument(
+    "input_file_path", type=click.Path(exists=True, dir_okay=False, file_okay=True)
+)
+@click.option(
+    "-o",
+    "--output_file_path",
+    type=click.Path(dir_okay=False, file_okay=True, writable=True),
+)
+@click.option(
+    "-c",
+    "--clean",
+    is_flag=True,
+    default=False,
+)
+def parse(input_file_path, output_file_path, clean):
+    click.echo("Parse extracted tables")
+    do_textract_parse(input_file_path, output_file_path, clean_input=clean)
     return 0
 
 
