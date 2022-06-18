@@ -27,15 +27,22 @@ DOE Reports Extractor
 Requirements
 ------------
 
+Tabula
+
 Poppler via pdf2image
 
 https://github.com/Belval/pdf2image#how-to-install
 
 
+Amazon Textract
+
+AWS Subscription (Access Key and Secret Key)
+
 Features
 --------
 
-* Extract tables from PDF reports of DOE_ using Tabula_
+* Extract tables from PDF reports of DOE_ using Amazon Textract (Online, more accurate, may incur charges.)
+* Extract tables from PDF reports of DOE_ using Tabula_ (Offline, less accurate, free and open source.)
 
 
 Usage
@@ -54,10 +61,32 @@ Usage
     --help  Show this message and exit.
 
     Commands:
-    extract          Extract tables from a PDF file using Tabula
+    extract          Extract tables from a PDF file using Amazon Textract
+    parse            Parse extracted tables from Amazon Textract
     show-debug-info  Debug info for DOE Extractor
+    tabula-extract   Extract tables from a PDF file using Tabula
+    tabula-parse     Parse extracted tables from Tabula
 
 **Extracting a report**
+
+Amazon Textract
+
+::
+
+    $ doeextractor extract 'reports/2022-05-18/petro_min_2022-may-10.pdf'
+    File is already analyzed
+    ('55bd3e728ab9d40076262fc8af2abbb2', 'reports/2022-05-18/petro_min_2022-may-10.pdf', 'reports/2022-05-18/petro_min_2022-may-10.csv')
+
+    $ doeextractor extract 'reports/2022-05-18/petro_sluz_2022-may-10_mimaropa.pdf'
+    Saved 2 pages to output/petro_sluz_2022-may-10_mimaropa
+    Analyzing...
+    0 / 2
+    1 / 2
+    2 / 2
+    CSV results are written to reports/2022-05-18/petro_sluz_2022-may-10_mimaropa.csv
+
+
+Tabula
 
 ::
 
@@ -95,6 +124,10 @@ Usage
 
 **Output in JSON format and write to file**
 
+Amazon Textract - CSV only
+
+Tabula
+
 ::
 
     $ doeextractor extract --pages all -i '/Users/pro/retailprices/reports/2022-05-18/petro_min_2022-may-10.pdf' -f JSON -o samples/petro_min_2022-may-10.json
@@ -108,6 +141,23 @@ Usage
 
 
 **Parsing the extracted report**
+
+Amazon Textract [TODO]
+
+::
+
+    $ doeextractor parse samples/petro_min_2022-may-10.csv -o output/petro_min_2022-may-10-output.json
+    Parse extracted tables
+    [.] Getting headers
+    [.] Reading data
+    [.] Correcting locations
+    [.] Breaking up merged lines
+    [.] Re-inserting merged 3 rows
+    Output file saved to: /Users/aldnav/pro/doeextractor/output/petro_min_2022-may-10-output.json
+    [.] Done
+
+
+Tabula
 
 ::
 

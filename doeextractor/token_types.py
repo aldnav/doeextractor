@@ -1,5 +1,4 @@
 import re
-from sre_parse import SPECIAL_CHARS
 
 CITIES = [
     # mindanao
@@ -118,7 +117,7 @@ NONE_TYPES = [
 ]
 
 
-PPriceRange = re.compile(r"(\d+\.\d+)\s\-\s(\d+\.\d+)")
+PPriceRange = re.compile(r"(\d+\.\d+)(\s*\-\s*|\s)(\d+\.\d+)")
 
 
 def feature_is_price(text):

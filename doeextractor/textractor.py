@@ -80,6 +80,7 @@ def generate_table_csv(table_result, blocks_map, table_index):
     # table_id = "Table_" + str(table_index)
     # get cells.
     # csv = "Table: {0}\n\n".format(table_id)
+    csv = ""
     for row_index, cols in rows.items():
         for col_index, text in cols.items():
             csv += "{}".format(text) + ","
