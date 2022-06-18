@@ -1,28 +1,12 @@
-============
 doeextractor
 ============
 
+[![image](https://img.shields.io/pypi/v/doeextractor.svg)](https://pypi.python.org/pypi/doeextractor) [![Documentation Status](https://readthedocs.org/projects/doeextractor/badge/?version=latest)](https://doeextractor.readthedocs.io/en/latest/?version=latest) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
-.. image:: https://img.shields.io/pypi/v/doeextractor.svg
-        :target: https://pypi.python.org/pypi/doeextractor
+**DOE Reports Extractor**
 
-
-.. image:: https://readthedocs.org/projects/doeextractor/badge/?version=latest
-        :target: https://doeextractor.readthedocs.io/en/latest/?version=latest
-        :alt: Documentation Status
-
-.. image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
-        :target: https://github.com/pre-commit/pre-commit
-        :alt: pre-commit
-
-
-
-DOE Reports Extractor
-
-
-* Free software: Apache Software License 2.0
-* Documentation: https://doeextractor.readthedocs.io.
-
+-   Free software: Apache Software License 2.0
+-   Documentation: <https://doeextractor.readthedocs.io>.
 
 Requirements
 ------------
@@ -31,8 +15,7 @@ Tabula
 
 Poppler via pdf2image
 
-https://github.com/Belval/pdf2image#how-to-install
-
+<https://github.com/Belval/pdf2image#how-to-install>
 
 Amazon Textract
 
@@ -41,16 +24,16 @@ AWS Subscription (Access Key and Secret Key)
 Features
 --------
 
-* Extract tables from PDF reports of DOE_ using Amazon Textract (Online, more accurate, may incur charges.)
-* Extract tables from PDF reports of DOE_ using Tabula_ (Offline, less accurate, free and open source.)
-
+-   Extract tables from PDF reports of [DOE](https://www.doe.gov.ph/)
+    using Amazon Textract (Online, more accurate, may incur charges.)
+-   Extract tables from PDF reports of [DOE](https://www.doe.gov.ph/)
+    using [Tabula](https://github.com/tabulapdf/tabula-java) (Offline,
+    less accurate, free and open source.)
 
 Usage
 -----
 
 **Available commands**
-
-::
 
     $ doeextractor --help
     Usage: doeextractor [OPTIONS] COMMAND [ARGS]...
@@ -71,8 +54,6 @@ Usage
 
 Amazon Textract
 
-::
-
     $ doeextractor extract 'reports/2022-05-18/petro_min_2022-may-10.pdf'
     File is already analyzed
     ('55bd3e728ab9d40076262fc8af2abbb2', 'reports/2022-05-18/petro_min_2022-may-10.pdf', 'reports/2022-05-18/petro_min_2022-may-10.csv')
@@ -85,10 +66,7 @@ Amazon Textract
     2 / 2
     CSV results are written to reports/2022-05-18/petro_sluz_2022-may-10_mimaropa.csv
 
-
 Tabula
-
-::
 
     $ doeextractor extract -i 'reports/2022-05-18/petro_min_2022-may-10.pdf'
     Running tabula with this command:
@@ -121,14 +99,11 @@ Tabula
     DIESEL,84.35 - 84.85,84.35 - 84.85,84.35,84.52,,,,,,,,,,
     KEROSENE,80.60 - 80.60,80.60 - 80.60,NONE,80.60,,,,,,,,,,
 
-
 **Output in JSON format and write to file**
 
 Amazon Textract - CSV only
 
 Tabula
-
-::
 
     $ doeextractor extract --pages all -i '/Users/pro/retailprices/reports/2022-05-18/petro_min_2022-may-10.pdf' -f JSON -o samples/petro_min_2022-may-10.json
     Running tabula with this command:
@@ -136,15 +111,9 @@ Tabula
     $ file samples/petro_min_2022-may-10.json
     samples/petro_min_2022-may-10.json: JSON data
 
-.. _Tabula: https://github.com/tabulapdf/tabula-java
-.. _DOE: https://www.doe.gov.ph/
-
-
 **Parsing the extracted report**
 
-Amazon Textract [TODO]
-
-::
+Amazon Textract
 
     $ doeextractor parse samples/petro_min_2022-may-10.csv -o output/petro_min_2022-may-10-output.json
     Parse extracted tables
@@ -156,10 +125,7 @@ Amazon Textract [TODO]
     Output file saved to: /Users/aldnav/pro/doeextractor/output/petro_min_2022-may-10-output.json
     [.] Done
 
-
 Tabula
-
-::
 
     $ doeextractor parse samples/petro_min_2022-may-10.json -o samples/parsed_output.json
     Parse extracted tables
