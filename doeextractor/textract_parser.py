@@ -4,16 +4,16 @@ import hashlib
 import json
 import logging
 import re
-from collections import Counter, namedtuple
-from dataclasses import dataclass
 from datetime import datetime
-from lib2to3.pgen2 import token
 from pathlib import Path
-from pprint import pp, pprint
+from pprint import PrettyPrinter
 
+from doeextractor import analyser
 from doeextractor.models.fuel_line_price import FuelLinePriceItem, FuelPrice
-from doeextractor.parser import Token
 from doeextractor.token_types import FEATURES, TOKEN_TYPES, UNCATEGORIZED
+
+pp = PrettyPrinter(indent=2)
+
 
 logger = logging.getLogger(__name__)
 
@@ -319,9 +319,11 @@ def parse(input_file_path: str, output_file_path: str = None, clean_input=True):
     # Tokenize
     tokens, header = tokenize_input(input_file_path)
     results = _build_data(tokens, header)
+    analysis = analyser.analyse(results)
     response = {
         "metadata": metadata,
         "results": results,
+        "analysis": analysis,
     }
     if not output_file_path:
         pp.pprint(response)
