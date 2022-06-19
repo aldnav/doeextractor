@@ -62,9 +62,6 @@ instance/
 # Scrapy stuff:
 .scrapy
 
-# Sphinx documentation
-docs/_build/
-
 # PyBuilder
 target/
 
@@ -110,3 +107,5 @@ cache.db
 output/
 .DS_Store
 !samples/output
+# Add Sphinx build for Github pages
+!docs/build/

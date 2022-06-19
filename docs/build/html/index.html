@@ -1,0 +1,273 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>doeextractor &#8212; DOE Reports Extractor  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+
+
+          <div class="body" role="main">
+
+  <div class="section" id="doeextractor">
+<h1>doeextractor<a class="headerlink" href="#doeextractor" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://pypi.python.org/pypi/doeextractor"><img alt="image" src="https://img.shields.io/pypi/v/doeextractor.svg" /></a> <a class="reference external" href="https://doeextractor.readthedocs.io/en/latest/?version=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/doeextractor/badge/?version=latest" /></a> <a class="reference external" href="https://github.com/pre-commit/pre-commit"><img alt="pre-commit" src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&amp;logoColor=white" /></a></p>
+<p><strong>DOE Reports Extractor</strong></p>
+<ul class="simple">
+<li>Free software: Apache Software License 2.0</li>
+<li>Documentation: <a class="reference external" href="https://doeextractor.readthedocs.io">https://doeextractor.readthedocs.io</a>.</li>
+</ul>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>Tabula</p>
+<p>Poppler via pdf2image</p>
+<p><a class="reference external" href="https://github.com/Belval/pdf2image#how-to-install">https://github.com/Belval/pdf2image#how-to-install</a></p>
+<p>Amazon Textract</p>
+<p>AWS Subscription (Access Key and Secret Key)</p>
+</div>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Extract tables from PDF reports of <a class="reference external" href="https://www.doe.gov.ph/">DOE</a>
+using Amazon Textract (Online, more accurate, may incur charges.)</li>
+<li>Extract tables from PDF reports of <a class="reference external" href="https://www.doe.gov.ph/">DOE</a>
+using <a class="reference external" href="https://github.com/tabulapdf/tabula-java">Tabula</a> (Offline,
+less accurate, free and open source.)</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p><strong>Available commands</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ doeextractor --help
+Usage: doeextractor [OPTIONS] COMMAND [ARGS]...
+
+Console script for doeextractor.
+
+Options:
+--help  Show this message and exit.
+
+Commands:
+extract          Extract tables from a PDF file using Amazon Textract
+parse            Parse extracted tables from Amazon Textract
+show-debug-info  Debug info for DOE Extractor
+tabula-extract   Extract tables from a PDF file using Tabula
+tabula-parse     Parse extracted tables from Tabula
+</pre></div>
+</div>
+<p><strong>Extracting a report</strong></p>
+<p>Amazon Textract</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ doeextractor extract &#39;reports/2022-05-18/petro_min_2022-may-10.pdf&#39;
+File is already analyzed
+(&#39;55bd3e728ab9d40076262fc8af2abbb2&#39;, &#39;reports/2022-05-18/petro_min_2022-may-10.pdf&#39;, &#39;reports/2022-05-18/petro_min_2022-may-10.csv&#39;)
+
+$ doeextractor extract &#39;reports/2022-05-18/petro_sluz_2022-may-10_mimaropa.pdf&#39;
+Saved 2 pages to output/petro_sluz_2022-may-10_mimaropa
+Analyzing...
+0 / 2
+1 / 2
+2 / 2
+CSV results are written to reports/2022-05-18/petro_sluz_2022-may-10_mimaropa.csv
+</pre></div>
+</div>
+<p>Tabula</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ doeextractor extract -i &#39;reports/2022-05-18/petro_min_2022-may-10.pdf&#39;
+Running tabula with this command:
+java -jar tabula-1.0.5-jar-with-dependencies.jar --lattice -f CSV --pages 1 /Users/pro/retailprices/reports/2022-05-18/petro_min_2022-may-10.pdf
+AREA,PRODUCT,PETRON,SHELL,CALTEX,PHOENIX,FLYING V,SEAOIL,JETTI,MY GAS,INDEPENDENT,OVERALL,COMMON,AVERAGE,
+&quot;&quot;,,Liquid Fuels Price Range,,,,,,,,,,,,
+&quot;&quot;,REGION IX,,,,,,,,,,,,,
+OUTLET&quot;,N.A,82.41 - 82.61,NONE,82.51.A,82.41 - 82.61,,N.A,&quot;NO BRANCH/
+&quot;&quot;,,RON 95,79.61 - 79.86,80.11 - 81.11,79.61 - 79.61,82.11 - 82.11,,79.61 - 79.61,79.61 - 81.66,79.61 - 82.11,79.61,80.22,,
+&quot;&quot;,,RON 91,78.86 - 79.11,79.36 - 79.36,78.86 - 78.86,81.36 - 81.36,NO BRANCH/,78.86 - 78.86,78.86 - 78.86,78.86 - 81.36,78.86,79.31,,
+&quot;&quot;,,DIESEL,81.02 - 81.23,81.52 - 83.92,81.02 - 81.03,83.53 - 83.53,OUTLET,80.02 - 80.02,81.03 - 83.95,80.02 - 83.95,81.03,81.59,,
+&quot;&quot;,,DIESEL PLUS,83.02 - 83.02,87.42 - 87.42,N.A,N.A,,N.A,N.A,83.02 - 87.42,87.42,85.95,,
+&quot;&quot;,,KEROSENE,83.70 - 83.70,-,83.13 - 83.13,N.A,,N.A,-,83.13 - 83.70,83.13,83.32,,
+OUTLET&quot;,78.45 - 78.45,78.20 - 78.45,78.20,78.25.20 - 78.20,-,&quot;NO BRANCH/
+&quot;&quot;,,RON 91,77.70 - 77.70,-,-,-,NO BRANCH/,77.70 - 77.70,-,77.95 - 77.95,77.70 - 77.95,77.70,77.76,
+&quot;&quot;,,DIESEL,80.30 - 80.30,-,-,-,OUTLET,80.30 - 80.30,-,80.55 - 80.55,80.30 - 80.55,80.30,80.35,
+&quot;&quot;,,KEROSENE,-,-,-,N.A,,N.A,N.A,80.20 - 80.20,80.20 - 80.20,NONE,80.20,
+OUTLET&quot;,77.21 - 79.21,NONE,78.22 - 77.21,79.21 - 79.21,78.25 - 78.25,-,,-,&quot;NO BRANCH/
+&quot;&quot;,,RON 91,76.71 - 76.71,-,78.05 - 78.05,-,,-,76.71 - 78.05,NONE,77.38,,,
+&quot;&quot;,,DIESEL,82.57 - 82.57,83.82 - 83.82,83.85 - 83.85,-,,-,82.57 - 83.85,NONE,83.41,,,
+&quot;&quot;,Dipolog City,RON 100,-,-,-,-,-,-,-,-,-,-,NONE,NONE
+&quot;&quot;,,RON 97,-,N.A,N.A,-,N.A,N.A,N.A,N.A,N.A,-,NONE,NONE
+&quot;&quot;,,RON 95,74.21 - 77.21,77.71 - 79.11,78.55 - 78.55,-,-,77.21 - 77.21,-,-,75.50 - 75.50,74.21 - 79.11,77.21,77.21
+&quot;&quot;,,RON 91,73.56 - 76.71,77.21 - 78.96,78.30 - 78.30,-,-,76.71 - 76.71,-,-,75.50 - 75.50,73.56 - 78.96,76.71,76.81
+&quot;&quot;,,DIESEL,78.22 - 82.57,83.07 - 84.31,83.80 - 83.80,-,-,82.57 - 82.57,-,-,76.65 - 76.65,76.65 - 84.31,82.57,81.99
+&quot;&quot;,,DIESEL PLUS,-,90.27 - 90.27,N.A,N.A,N.A,-,N.A,N.A,N.A,90.27 - 90.27,90.27,90.27
+&quot;&quot;,,KEROSENE,-,-,-,N.A,-,N.A,N.A,-,-,-,NONE,NONE
+OUTLET&quot;,-,-,NONE,NONERON 95,&quot;NO BRANCH/
+RON 91,81.85 - 81.85,81.85 - 81.85,81.85,81.85,,,,,,,,,,
+DIESEL,84.35 - 84.85,84.35 - 84.85,84.35,84.52,,,,,,,,,,
+KEROSENE,80.60 - 80.60,80.60 - 80.60,NONE,80.60,,,,,,,,,,
+</pre></div>
+</div>
+<p><strong>Output in JSON format and write to file</strong></p>
+<p>Amazon Textract - CSV only</p>
+<p>Tabula</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ doeextractor extract --pages all -i &#39;/Users/pro/retailprices/reports/2022-05-18/petro_min_2022-may-10.pdf&#39; -f JSON -o samples/petro_min_2022-may-10.json
+Running tabula with this command:
+java -jar /Users/pro/tabula-1.0.5-jar-with-dependencies.jar --lattice -f JSON --pages all /Users/pro/retailprices/reports/2022-05-18/petro_min_2022-may-10.pdf -o /Users/pro/doeextractor/samples/petro_min_2022-may-10.json
+$ file samples/petro_min_2022-may-10.json
+samples/petro_min_2022-may-10.json: JSON data
+</pre></div>
+</div>
+<p><strong>Parsing the extracted report</strong></p>
+<p>Amazon Textract</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ doeextractor parse samples/petro_min_2022-may-10.csv -o output/petro_min_2022-may-10-output.json
+Parse extracted tables
+[.] Getting headers
+[.] Reading data
+[.] Correcting locations
+[.] Breaking up merged lines
+[.] Re-inserting merged 3 rows
+Output file saved to: /Users/aldnav/pro/doeextractor/output/petro_min_2022-may-10-output.json
+[.] Done
+</pre></div>
+</div>
+<p>Tabula</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ doeextractor parse samples/petro_min_2022-may-10.json -o samples/parsed_output.json
+Parse extracted tables
+Output file saved to: /Users/pro/doeextractor/samples/parsed_output.json
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#types-of-contributions">Types of Contributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#report-bugs">Report Bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#fix-bugs">Fix Bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#implement-features">Implement Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#write-documentation">Write Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#submit-feedback">Submit Feedback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#tips">Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="authors.html#development-lead">Development Lead</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authors.html#contributors">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">DOE Reports Extractor</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="installation.html" title="next chapter">Installation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Aldrin Navarro.
+
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+
+
+
+  </body>
+</html>
