@@ -8,6 +8,7 @@ from typing import List
 from doeextractor.models.fuel_line_price import FuelLinePriceItem, FuelPrice
 
 pp = PrettyPrinter(indent=2)
+DECIMAL_PLACES = 2
 
 
 def analyse(results: List[FuelLinePriceItem]):
@@ -33,9 +34,15 @@ def analyse(results: List[FuelLinePriceItem]):
     for company in company_products.keys():
         for product, prices in company_products[company].items():
             flattened_prices = sorted(list(itertools.chain(*prices)))
-            results[company][product]["mean"] = mean(flattened_prices)
-            results[company][product]["median"] = median(flattened_prices)
-            results[company][product]["mode"] = mode(flattened_prices)
+            results[company][product]["mean"] = round(
+                float(mean(flattened_prices)), DECIMAL_PLACES
+            )
+            results[company][product]["median"] = round(
+                float(median(flattened_prices)), DECIMAL_PLACES
+            )
+            results[company][product]["mode"] = round(
+                float(mode(flattened_prices)), DECIMAL_PLACES
+            )
     return results
 
 
