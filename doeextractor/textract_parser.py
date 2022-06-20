@@ -335,7 +335,3 @@ def parse(input_file_path: str, output_file_path: str = None, clean_input=True):
     print("[.] Done")
 
     return 0
-
-
-if __name__ == "__main__":
-    parse("/Users/aldnav/pro/doeextractor/samples/petro_min_2022-may-10.csv")

@@ -1,7 +1,7 @@
 doeextractor
 ============
 
-|image| |Documentation Status| |pre-commit|
+|pre-commit|
 
 **DOE Reports Extractor**
 
@@ -132,7 +132,7 @@ Amazon Textract
    [.] Correcting locations
    [.] Breaking up merged lines
    [.] Re-inserting merged 3 rows
-   Output file saved to: /Users/aldnav/pro/doeextractor/output/petro_min_2022-may-10-output.json
+   Output file saved to: /Users/pro/doeextractor/output/petro_min_2022-may-10-output.json
    [.] Done
 
 Tabula
@@ -143,10 +143,6 @@ Tabula
    Parse extracted tables
    Output file saved to: /Users/pro/doeextractor/samples/parsed_output.json
 
-.. |image| image:: https://img.shields.io/pypi/v/doeextractor.svg
-   :target: https://pypi.python.org/pypi/doeextractor
-.. |Documentation Status| image:: https://readthedocs.org/projects/doeextractor/badge/?version=latest
-   :target: https://doeextractor.readthedocs.io/en/latest/?version=latest
 .. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
    :target: https://github.com/pre-commit/pre-commit
 

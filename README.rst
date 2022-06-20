@@ -1,7 +1,7 @@
 doeextractor
 ============
 
-|image| |Documentation Status| |pre-commit|
+|pre-commit|
 
 **DOE Reports Extractor**
 
@@ -56,9 +56,5 @@ Usage
 
 Please check `docs <docs/>`__ for more info
 
-.. |image| image:: https://img.shields.io/pypi/v/doeextractor.svg
-   :target: https://pypi.python.org/pypi/doeextractor
-.. |Documentation Status| image:: https://readthedocs.org/projects/doeextractor/badge/?version=latest
-   :target: https://doeextractor.readthedocs.io/en/latest/?version=latest
 .. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
    :target: https://github.com/pre-commit/pre-commit
