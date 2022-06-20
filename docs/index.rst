@@ -6,7 +6,7 @@ doeextractor
 **DOE Reports Extractor**
 
 -  Free software: Apache Software License 2.0
--  Documentation: https://doeextractor.readthedocs.io.
+-  Documentation: https://aldnav.github.io/doeextractor/
 
 Requirements
 ------------

@@ -6,7 +6,7 @@ doeextractor
 **DOE Reports Extractor**
 
 -  Free software: Apache Software License 2.0
--  Documentation: https://doeextractor.readthedocs.io.
+-  Documentation: https://aldnav.github.io/doeextractor/
 
 Requirements
 ------------
@@ -54,7 +54,7 @@ Usage
 
 --------------
 
-Please check `docs <docs/>`__ for more info
+Please check the `documentation <https://aldnav.github.io/doeextractor/>`_ for more info
 
 .. |pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
    :target: https://github.com/pre-commit/pre-commit
