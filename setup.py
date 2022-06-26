@@ -7,11 +7,15 @@ from setuptools import find_packages, setup
 with open("README.rst") as readme_file:
     readme = readme_file.read()
 
-with open("HISTORY.rst") as history_file:
+with open("docs/history.rst") as history_file:
     history = history_file.read()
 
 requirements = [
     "Click>=7.0",
+    "python-dotenv>=0.20.0",
+    "boto3>=1.24.17",
+    "pdf2image>=1.16.0",
+    "pillow>=9.1.1",
 ]
 
 test_requirements = [

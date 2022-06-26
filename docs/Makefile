@@ -15,5 +15,10 @@ help:
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+# rm -f doeextractor.rst
+# rm -f modules.rst
+# sphinx-apidoc -o . ../doeextractor
+# $(MAKE) -C . clean
+# $(MAKE) -C . html
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

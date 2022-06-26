@@ -4,19 +4,30 @@ Installation
 Stable release
 --------------
 
-To install doeextractor, run this command in your terminal:
+🛠 WORK IN PROGRESS 🛠
+
+.. To install doeextractor, run this command in your terminal:
+
+.. .. code:: console
+
+..    $ pip install doeextractor
+
+.. This is the preferred method to install doeextractor, as it will always
+.. install the most recent stable release.
+
+.. If you don’t have `pip <https://pip.pypa.io>`__ installed, this `Python
+.. installation
+.. guide <http://docs.python-guide.org/en/latest/starting/installation/>`__
+.. can guide you through the process.
+
+Early release
+-------------
+
+Installing doeextractor from Github releases by running this command in your terminal:
 
 .. code:: console
 
-   $ pip install doeextractor
-
-This is the preferred method to install doeextractor, as it will always
-install the most recent stable release.
-
-If you don’t have `pip <https://pip.pypa.io>`__ installed, this `Python
-installation
-guide <http://docs.python-guide.org/en/latest/starting/installation/>`__
-can guide you through the process.
+    $ pip install git+https://github.com/aldnav/doeextractor.git@v0.1.0#egg=doeextractor
 
 From sources
 ------------

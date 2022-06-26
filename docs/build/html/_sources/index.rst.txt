@@ -153,6 +153,7 @@ Tabula
 
    installation
    usage
+   modules
    contributing
    authors
    history

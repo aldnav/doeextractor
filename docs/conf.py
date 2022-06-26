@@ -24,9 +24,9 @@ copyright = "2022, Aldrin Navarro"
 author = "Aldrin Navarro"
 
 # The short X.Y version
-version = ""
+version = "0.1.0"
 # The full version, including alpha/beta/rc tags
-release = ""
+release = "0.1.0"
 
 
 # -- General configuration ---------------------------------------------------
@@ -41,6 +41,7 @@ release = ""
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.githubpages",
+    "sphinx.ext.napoleon",
 ]
 
 # Add any paths that contain templates here, relative to this directory.

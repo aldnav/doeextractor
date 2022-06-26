@@ -186,5 +186,8 @@ def parse(input_file_path, output_file_path, clean):
     return 0
 
 
+main = cli
+
+
 if __name__ == "__main__":
     sys.exit(cli())  # pragma: no cover

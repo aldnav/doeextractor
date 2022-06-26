@@ -17,7 +17,7 @@ def get_checksum(file_path):
         return hashlib.md5(f.read()).hexdigest()
 
 
-def add_file_to_local_cache(file_path, output_file_path="") -> str:
+def add_file_to_local_cache(file_path: Path, output_file_path: Path) -> str:
     """
     Add file to local cache.
     """
@@ -60,6 +60,8 @@ def convert_pdf_to_png(file_path, merge_pages=False) -> Path:
     """
     Convert a PDF file to PNG.
     """
+    output_file_path = file_path
+    output_file_dir = file_path.parent
     if merge_pages:
         output_file_path = (
             Path(__file__).parent.parent / "output" / (file_path.stem + ".png")

@@ -128,8 +128,8 @@ def extract(input_file_path: Union[str, Path]):
     if isinstance(input_file_path, str):
         input_file_path = Path(input_file_path).absolute()
     # Check if the file is already analyzed
-    is_file_analyzed_before, initial_result = is_file_already_analyzed(input_file_path)
-    if is_file_already_analyzed and initial_result:
+    is_file_analyzed_before, initial_result = is_file_already_analyzed(input_file_path)  # type: ignore
+    if is_file_analyzed_before and initial_result:
         # TODO Return the analysis result
         print("File is already analyzed")
         print(initial_result)
